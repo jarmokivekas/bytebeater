@@ -1,0 +1,10 @@
+How to modify BeatLang
+----------------------
+if you want to modify or add functionality to BeatLang you only need to do some simple changes or additions to the language implementation source code.
+
+1. Choose a token name
+2. Write a test for your token into interpreter_test.c:token_test().
+3. Implement the token in stack_machine.c in a function named after the token.
+   Add the function prototype to stack_machine.h
+4. Add your {token_name, callback_function} pair to the list of tokens in tokenizer.c
+5. Make sure the defined value of LANG_TOKEN_COUNT in tokenizer.c matches the token count.

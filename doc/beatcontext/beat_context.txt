@@ -1,0 +1,30 @@
+What is the beat context?
+-------------------------
+
+The beat context is what defines the audio that is being synthesized. The context expression defines the timbre of the tone, the shape of the waveform. Values of time variables define the phase of the waveform. Time variables might also have a velocity that will affect the base pitch and tempo of the beat. When some or all of these variables can be modified in real-time, the context becomes a changing and organic definition of the current sound.
+
+{expression, t}
+If the context had no changing variables then the samples played would always have the same value and thus silence would be made. In their simplest form bytebeats have one variable 't' which will change over time. A single variable periodic function is defined by an expression and then the values of expression(t) are interpreted as waveforms.
+
+{expression, t, var}
+Often the expressions of bytebeats will include some sort of constants like bitmasks, octaves, and integers. Changing the constants by small amounts will make the beat sound different while still clearly keeping a lot of it's original structure. It is fleasible to use easily modifiable variables as part of the expression in order to get rid of having to retype and recompile the expression freequently.
+
+{expression, t, t_velocity, var}
+Even with very complex and long expressions it is hard to synthesize frequencies that are not multiples of the nyquist frequency of the 't' variable. If i want to play a tune with the same timbre and waveform but at a lower pitch, then i'd like to be able to change the velocity at which 't' is incremented.
+
+{expression_L, expression_R, t_tone, t_tone_velocity, t_tempo, t_tempo_velocity, t_var_joy_x, var_joy_y, var_button_1}
+Of course the beat context can be expanded to include even more state data like more variables, expressions for other channels, a different time variable for tone and tempo, etc. The beat context is simply a context variable that is modified by the user by means of text editing and sensor controls. The context variable is also the one variable that has to be parsed, interpreted, and evaluated by the CPU in order to generate audio.
+
++------+  +------+
+| User |  | Time |
++------+  +------+
+    |        |
+    V        V
+   +----------+
+   | Context  |
+   +----------+
+        |
+        V
+   +----------+
+   | Waveform |
+   +----------+

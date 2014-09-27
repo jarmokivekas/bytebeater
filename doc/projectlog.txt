@@ -1,0 +1,29 @@
+BeatLang project log
+--------------------
+20.9.2014
+The beatlang project is a try at making a modular, extensible, and modifiable bytebeat instrument. The modular components are the language and controls for composing.
+Making a bytebeat instrument (sound making device) has been in my thoughts for a longer time. I've erlier been doing one for the Arduino, but that time the bytebeat expression was hardcoded and had to be recompiled and loaded in order to change. Now i want to edit the sound real-time and on the fly.
+
+The bytebeats will have a bit more depth than what they have had in my earlier projects involving bytebeats. The arithmetic expression of the beat will be interpreted and edited in real-time, the control panel will be able to modify some variables, and everything will be implemented into a handheld device.
+ 
+There will be a musical stack of software when preforming with the bytebeater. On the top there is the control variables, the possibility to affect the pitch, timbre, and rythm of the beat. This is meant to be something that can be used to demo the device and let users have a playful time of exploration with the device. Next comes the bytebeat expression. The expression is to be changed by the users who know programming or find it interesting to generate different kinds of waveforms, gatings, bit patterns, etc. The expression changing is the reason for an embedded display and keyboard port. The lowest level on the stack is the bytebeat expression language implementation. Do you want to use pure sines? Make a language that has a sine function. Dont like reverse polish notation? Make a stack language. Writing your own langiuage is the most theoretical ans esoteric mode of making bytebeats, any beats for that matter.
+
+The language
+------------
+20.9.2014
+The language will be one of the things that will be replaceable later in the project, but it is by far the most theoretically interesting parts of the bytebeater to developed.
+
+Because i'm not going to start compiling anything on the AVR, the code will be interpreted. Due to the simplicity of the language i chose the parsing and tokenizing of it will be very straight forward. No fancy tree or automata structures are needed, just string comparing and function pointers. The code will be translated into executable codes for the stack machine. This code will simply be the tokens translated into function calls.
+
+21.9.2014
+I'm done with the language skeleton, now it's just about adding features. That was quick.
+
+Compiling to AVR
+----------------
+23.9.2014
+
+Compiling to AVR was not easy, since i didn't know that you can't separate the compiling and linking. As far as i know i'll have to give all the source files as argument to avr-gcc at once instead of compiling them one by one. This is no big problem but it did slow down my workflow, since i had no idea the error was in my process, not my code. This evening has been devoted to debugging timer interrupts, modes, and the like. I've finally got a bytebeat program running on the Arduino UNO.
+
+	((i<<1)&(i>>4)?0:0xff)
+
+The beat is hardcoded in the C source, but the noise is still amazing. There is a lot of hardware to interface, but getting timers to work is a big step. I should have a DONE list just to later motivate myself by looking at how much i've actually gotten done.

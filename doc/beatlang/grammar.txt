@@ -1,0 +1,17 @@
+Regular expressions for tokens
+------------------------------
+The tokens of the Beatlang are going to be extremely simple. Theres numbers, operators, and functions. Operators will be compiled to functions anyway, so we're left with numbers and functions. Beatlang is a forth-like language and therefore separating functions and operators is not fleasible, everything is words that are in fact operations on the stack. Even numbers are operations on the stack, just very simple push operations.
+
+Every number token is meant to be parsed and passed to the push function. Any other word should be parsed and the relevant function called, with the stack structure as the argument.
+
+
+Number		0[0-9 A-F]+
+Operator	[+-*/%&|^~><=]
+Function 	[a-z]+
+			dup swap ddup rot drop t sensor_0
+
+expression:	token [expression]
+token:		number | operator | function
+number:
+operator:
+function:

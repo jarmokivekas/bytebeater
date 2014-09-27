@@ -1,0 +1,30 @@
+======== ICE BOX ========
+BeatLang
+*	Interpreter
+*		Tokenizer
+*		Stack datastructures
+		Functions	
+*	Formal language model
+
+Controls/Interface
+	Expression editor
+		text output/ screen 
+		text input / keyboard
+	joysticks
+	buttons
+	dials
+	sliders
+
+Beat player
+*	PWM
+*	Samplerate
+	audio hardware
+	time modifies the context
+	context variable types
+		var
+		velocity
+
+	
+======== stories ========
+I2C sensor interfaces for modularity
+

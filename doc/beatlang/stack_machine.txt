@@ -1,0 +1,21 @@
+The BeatLang stack machine
+--------------------------
+
+The BeatLang is executed by a simple virtual stack machine that takes language tokens as input. Translating the word strings into tokens is a fast and easy thing to do. BeatLang is easy to parse, there are no scopes, and the instructions are simply executed one after another. This makes it well suited for on-the-run interpretation. The whole interpretation process can be done one token at a time, without any need for structures like syntax trees. The expression string is almost an executable in itself, only the names of the functions and the integer values must be parsed. Every word can be simplified into a function call. Let's look at this BeatLang expression:
+	
+	2 14 + 9 - dup
+
+Tokenized it will be:
+
+	2, 14, +, 9, -, dup
+
+And as function calls:
+
+	push(s, 2);
+	push(s, 14);
+	add(s);
+	push(s, 9);
+	sub(s);
+	dup(s);
+
+The language is a Forth dialect/subset and the general theory of stack machines apply to the BeatLang virtual machine.

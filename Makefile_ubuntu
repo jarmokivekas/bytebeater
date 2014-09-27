@@ -1,0 +1,36 @@
+CC=gcc
+DEBUGFLAGS=-g #-D NODEBUG
+CFLAGS=$(DEBUGFLAGS) -Wall
+LDFLAGS=-Wall
+
+all: compile test
+compile: beatlang_cli.exe unit_test.exe
+test: compile
+	@./unit_test.exe
+
+bin/ubuntu/%.o: src/%.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+	
+unit_test.exe:                  \
+	bin/ubuntu/log/log_ubuntu.o       \
+	bin/ubuntu/struct/beat_context.o   \
+	bin/ubuntu/language/stack_machine.o\
+	bin/ubuntu/language/interpreter.o  \
+	bin/ubuntu/language/tokenizer.o    \
+	bin/ubuntu/test/interpreter_test.o \
+	bin/ubuntu/test/tokenizer_test.o   \
+	bin/ubuntu/test/unit_test.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+beatlang_cli.exe:                   \
+	bin/ubuntu/log/log_ubuntu.o       \
+	bin/ubuntu/struct/beat_context.o   \
+	bin/ubuntu/language/stack_machine.o\
+	bin/ubuntu/language/tokenizer.o    \
+	bin/ubuntu/language/interpreter.o  \
+	bin/ubuntu/beatlang_cli/main.o
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+clean:
+	rm -f bin/ubuntu/*.o bin/ubuntu/*/*.o
+

@@ -1,0 +1,20 @@
+Readme for the beatlang project
+===============================
+
+Testing
+-------
+All unit tests can be ran by the command:
+	make -f Makefile_ubuntu test
+
+Compiling
+---------
+###Ubuntu
+The beatlang interpreter commandline tool can be compiled by the command:
+	make -f Makefile_ubuntu beatlang.exe
+
+###AVR
+The AVR hex file is built by:
+	make -f Makefile_AVR hex
+
+And uploaded with:
+	make -f Makefile_AVR flash
