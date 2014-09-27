@@ -1,10 +1,15 @@
 /**
-* A PWM example for the ATmega328P using the 8-Bit Fast PWM mode.
+* A simple version of the bytebeater for the ATmega328P.
 * Building for AVR on Arduino UNO:
 * 
 * avr-gcc -o beep.o beep.c -mmcu=atmega328p -DF_CPU=16000000UL
 * avr-objcopy -O ihex beep.o beep.hex
 * avrdude -p m328p -P /dev/ttyUSB0 -c arduino -b 19200 -F -u -U flash:w:beep.hex
+*
+* Connections:
+* AREF:	Analog reference
+* PB6:	PWM audio
+* PC0:	analog control 1
 */
 
 #include <avr/io.h>
