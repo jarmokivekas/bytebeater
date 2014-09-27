@@ -7,6 +7,9 @@ LDFLAGS=-Wall
 bin/AVR/%.o: src/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
+src/%.s: src/%.c
+	$(CC) -S -o $@ $< $(CFLAGS)
+
 #--------all inclusive bytebeater
 bytebeater_flash:
 	avrdude -c arduino -p atmega328p -P /dev/ttyACM0 -U flash:w:bin/AVR/bytebeater.hex
@@ -31,7 +34,7 @@ simple_beater_hex:bin/AVR/simple_beater.o
 bin/AVR/simple_beater.o:          \
 	src/simple_beater/main.c      \
 	src/simple_beater/UART_puts.c \
-	src/simple_beater/TIMER_pwm.c \
+	src/simple_beater/TIMER_beat.c \
 	src/simple_beater/ADC_read.c
 	$(CC) -o $@ $^ $(CFLAGS)
 
@@ -41,7 +44,8 @@ sand_flash:
 sand_hex:bin/AVR/sand.o
 	avr-objcopy -O ihex $^ bin/AVR/sand.hex
 bin/AVR/sand.o:\
-	src/sandbox/main.c
+	src/sandbox/main.c \
+	src/sandbox/callback.c
 	$(CC) -o $@ $^ $(CFLAGS)
 
 #--------cleaning up

@@ -1,4 +1,4 @@
-#include "TIMER_pwm.h"
+#include "TIMER_beat.h"
 
 void setup_TIMER(){
 	/**
@@ -40,24 +40,22 @@ void setup_TIMER(){
 	*/
 }
 
-
-
-//TIMER0 overflow vector callback function and argument data.
-//uint8_t (*sample)(context* c);
-context* ctx;
+//ISR callback function code and data
+volatile context* ctx;
+uint8_t sample(){
+	return ctx->t<<1 & ctx->t>>4 & ctx->analog_1;
+}
 
 ISR(TIMER0_OVF_vect){
-	uint16_t t;
-	ctx->t_p++;
-	if(ctx->t_p >= ctx->t_v){
-		ctx->t_p = 0;
+	ctx->t_phase++;
+	if(ctx->t_phase >= ctx->t_velocity){
+		ctx->t_phase = 0;
 		ctx->t++;
-		t = ctx->t;
-		OCR0A = (t>>4)&t&ctx->a;
+		OCR0A = sample(ctx);
 	}
 }
 
-void setup_bytebeat(/*uint8_t (*sample_)(context*), */context* ctx_){
-	//sample = sample_;
-	ctx = ctx_;
+void setup_bytebeat(volatile context* ctx_in){
+	setup_TIMER();
+	ctx = ctx_in;
 }

@@ -18,22 +18,20 @@
 
 #include "UART_puts.h"
 #include "ADC_read.h"
-#include "TIMER_pwm.h"
+#include "TIMER_beat.h"
 #include "context.h"
 
 int main (void) {
 	setup_UART_puts();
 	setup_ADC();
-	setup_TIMER();
-	context ctx = {0, 10, 0, 0};
+	volatile context ctx = {0, 10, 0, 0};
 	setup_bytebeat(&ctx);
-	sei();
 	UART_puts("Everything is set up: UART, ADC, TIMER and bytebeat context.\n\r");
-	uint8_t ADC_value;
+	sei();
+
 	while(1){
-		ADC_value = ADC_read(0);
-		ctx.a = ADC_value;
-		//UART_put_hex(ADC_value);
+		ctx.analog_1 = ADC_read(0);
+		//UART_put_hex(ADC_read(0));
 		//UART_puts("\n\r");
 		//_delay_ms(100);
 	}
