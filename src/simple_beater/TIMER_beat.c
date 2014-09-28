@@ -26,9 +26,13 @@ void setup_TIMER1_CTC(){
 	//call sei() to enable timer interrupt
 }
 
-uint8_t t = 0;
+volatile beat_context *ctx;
 ISR(TIMER1_COMPA_vect){
-	//PORTB ^= (1<<PB0);
-	t+=2;
-	OCR0A = (t&2)?t:0xff-t;
+	ctx->t++;
+	uint16_t t = ctx->t;
+	OCR0A = (t<<1)&(t>>4)?0x00:0xff;
+}
+
+void setup_beat(volatile beat_context *ctx_in){
+	ctx = ctx_in;
 }

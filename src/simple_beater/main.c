@@ -42,19 +42,26 @@ int main (void) {
 	//setup_ADC();
 	setup_TIMER0_PWM();
 	setup_TIMER1_CTC();
-	//volatile context ctx = {0, 0};
+	volatile beat_context ctx = {0, 0};
+	setup_beat(&ctx);
 	//UART_puts("Everything is set up: UART, ADC, TIMER and bytebeat context.\n\r");
 	sei();
 
 	uint8_t i = 0;
+	uint8_t up = 1;
+	OCR1AH = 0x08; 
+	OCR1AL = 0x00; 
 	while(1){
 		//set samplerate by setting sample length.
 		//Most bytebeat tones are multiples of the nyquist frequency
 		//so this will define the tone
-		OCR1AH = (tones[i]>>8) & 0xff; 
-		OCR1AL =  tones[i]     & 0xff; 
-		if(++i>12) i=0;
-		_delay_ms(100);
+		OCR1AH = (tones[i]>>8)>>4 & 0xff; 
+		OCR1AL =  tones[i]>>4     & 0xff; 
+		if(up) i++;
+		else   i--;
+		if(i==12) up=0;
+		if(i==0) up=1;
+		_delay_ms(1000);
 	}
 	return 0;
 }

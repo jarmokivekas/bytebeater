@@ -1,9 +1,9 @@
 #ifndef context_h
 #define context_h
 
-typedef struct context{
+typedef struct beat_context{
 	uint16_t t;
 	uint8_t analog_1;
-}context;
+}beat_context;
 
 #endif /*context_h*/
