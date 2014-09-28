@@ -7,13 +7,16 @@ The Setup function which will set up all hardware, timers, and peripherals. Setu
 
 Interface loop
 --------------
-The interface loop is the main loop that the microcontroller will be executing. This loop will poll the interface elements and react according to the interface input.The interface elements will include all methods of user input, that is all the sensors, buttons, the keyboard, and connections to other devices. The reactions to the changes and values of the interface elements will be modifying the beat context, writing to output peripherals like the display, and reading data from external memory. The interface loop implements the user interface that is wanted on the device.
-
-The timer interrupt service routine
------------------------------------
-On hardware level the timer ISR is responsible for generating the PWM audio signal. The timer will define a maximum samplerate and a smallest unit of time. On software level the timer is responsible for modifying the time variables 't' in the beat context according to the velocity variables.
-The timer ISR will also call the beat context evaluation routine. Calling the evaluation routine will not be done every time the interrups fires, but only those times when the time variables 't' change. There is simply no need to evaluate the context faster than the fastest time variable. The context is constantly being changed by the user and the timer, but the timer will be changing the context much faster than the user. The timer might increment 't' 8000 times a second, while the analog controls are changed byt he user only tens of times a second.
+The interface loop is the main loop that the microcontroller will be executing. This loop will poll the interface elements and react according to the interface input. The interface elements will include all methods of user input, that is all the sensors, buttons, the keyboard, and connections to other devices. The reactions to the changes and values of the interface elements will be modifying the beat context, writing to output peripherals like the display, and reading data from external memory. The interface loop implements the user interface that is wanted on the device.
 
 The beat context
 ----------------
-The beat context is responsible for containing all the global data that needs to be available for all the other routines.
+The beat context is responsible for containing all the global data that needs to be available for all the bytebeat evaluation routine.
+
+TIMER0
+------
+Timer zero only has one responsibility, and that is to do PWM. The timer counts and outputs the audio to a pin. The timer works in fast PWM with the fastest possible clock, which gives us a maximum samplerate of 62500 (16MHz clock). The OCR1A register that defines the width of the pulse will be modified by other parts of the bytebeater.
+
+TIMER1
+------
+Timer 1 will be used to set the bytebeat sampling rate, ie. how fast 't' is incremented. Timer 1 works in CTC mode so that everytime it reaches OCR1A a new bytebeat sample will be synthesized and copied to OCR0A thus setting the PWM width. With the timer we can control the samplerate of the bytebeat and thus control its pitch. The TIMER1_COMPA vector will increment 't' and call the context evaluation routine.

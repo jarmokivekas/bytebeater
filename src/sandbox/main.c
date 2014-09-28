@@ -2,32 +2,50 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-#include "callback.h"
-
-void blink(uint8_t mask){
-	PORTB ^= mask;
-	_delay_ms(1000);
-	PORTB ^= mask;
-	_delay_ms(1000);
+ISR(TIMER1_COMPA_vect){
+	PORTB ^= (1<<DDB0);
 }
 
-int main(){
-	DDRB |= (1<<DDB0) | (1<<DDB1) | (1<<DDB2);
-	blink(0x01);
-
-	//set the ISR callback function
-	set_callback(blink, 0x02);
-	
-	//INT0 interrupt triggers on rising edge
-	EICRA |= (1<<ISC01) | (1<<ISC00);
-	EIMSK |= (1<<INT0);
+void setup_TIMER0_CTC(){
+	TCCR1B |= /*(1<<CS12)|*/ (1<<CS10);	//1024 prescaler
+	TCCR1B |= (1<<WGM12);				//CTC with OCR1A
+	TIMSK1 |= (1<<OCIE1A);				//unmask output compare interrupt
 	sei();
+}
 
-	//trigger the interrupt in software--------BEEP BEEP BEEP
-	DDRD |= (1<<DDD2);
-	PORTD |= (1<<PD2);
-	PORTD &= ~(1<<PD2);
-	
-	blink(0x04);
+const uint16_t tones[13] = {
+	0x8e0b,	//A
+	0x8612,	//A#
+	0x7e8c,	//B
+	0x7772, //C
+	0x70bd,	//C#
+	0x6a69,	//D
+	0x6470,	//D#
+	0x5ecd,	//E
+	0x597b,	//F
+	0x5475,	//F#
+	0x4fb8,	//G
+	0x4b3e,	//G#
+	0x4705	//A
+};
+
+const uint8_t tune[3] = {
+	3,
+	7,
+	10
+};
+
+int main(){
+	setup_TIMER0_CTC();
+	DDRB |= (1<<DDB0);
+	uint8_t i = 0;
+	while(1){
+		
+		OCR1AH = (tones[tune[i]]>>8) & 0xff; 
+		OCR1AL =  tones[tune[i]]     & 0xff; 
+		i++;
+		if(i>2) i=0;
+		_delay_ms(50);
+	}
 	return 0;
 }

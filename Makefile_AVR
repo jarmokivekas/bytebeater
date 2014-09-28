@@ -44,8 +44,7 @@ sand_flash:
 sand_hex:bin/AVR/sand.o
 	avr-objcopy -O ihex $^ bin/AVR/sand.hex
 bin/AVR/sand.o:\
-	src/sandbox/main.c \
-	src/sandbox/callback.c
+	src/sandbox/main.c
 	$(CC) -o $@ $^ $(CFLAGS)
 
 #--------cleaning up

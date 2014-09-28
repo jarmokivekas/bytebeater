@@ -3,9 +3,8 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "context.h"
 
-void setup_TIMER();
-void setup_bytebeat(volatile context* ctx_in);
+void setup_TIMER0_PWM();
+void setup_TIMER1_CTC();
 
 #endif /*TIMER_pwm_h*/
