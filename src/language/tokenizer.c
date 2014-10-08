@@ -4,7 +4,7 @@
 const token number = {"number", NULL};
 const token error = {"ERROR", NULL};
 
-#define LANG_TOKEN_COUNT 6
+#define LANG_TOKEN_COUNT 7
 const token lang_token[LANG_TOKEN_COUNT] = {
 	//keeping the shorter and more often used tokens
 	//on the top will make interpreting faster.
@@ -13,7 +13,8 @@ const token lang_token[LANG_TOKEN_COUNT] = {
 	{"&", &and_},			//bitwise AND
 	{"|", &or_},			//bitwise OR
 	{"^", &xor_},			//bitwise XOR
-	{"<<", &left_shift}		//left shift
+	{"<<", &left_shift},	//left shift
+	{"$", NULL}
 };
 
 

@@ -19,6 +19,13 @@ int evaluate(beat_context* ctx){
 			//and continue from the next one
 			print(ERROR, "syntax error");
 			cp++;
+		} else if(t.name[0] == '$'){
+			// token is variable
+			int * var_addr = &ctx->var_1;
+			cp += 1;
+			var_addr += (*cp - 'a');
+			push(&s, *var_addr);
+			cp += 1;
 		} else if( strncmp(t.name, "number", 6) == 0 ){
 			n = parse_hex(cp);
 			push(&s, n);

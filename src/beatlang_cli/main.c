@@ -15,6 +15,8 @@ int main(){
 	char input[100];
 	beat_context ctx;
 	ctx.expression = input;
+	ctx.var_1 = 10;
+	ctx.var_2 = 64;
 	while(1){
 		fgets(input, 100, stdin);
 		if( strncmp(input, "quit", 4) == 0 ) return 0;
