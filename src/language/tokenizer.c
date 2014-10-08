@@ -1,8 +1,8 @@
 #include "tokenizer.h"
 
 //-------- the defenition of the language --------
-const token number = {"number, NULL"};
-const token error = {"ERROR, NULL"};
+const token number = {"number", NULL};
+const token error = {"ERROR", NULL};
 
 #define LANG_TOKEN_COUNT 6
 const token lang_token[LANG_TOKEN_COUNT] = {

@@ -9,7 +9,7 @@ int evaluate(beat_context* ctx){
 	int n;
 	while(1){
 		//skip whitespace
-		while(*cp == ' ' || *cp == '\n') cp++;
+		while(*cp == ' ' || *cp == '\n' || *cp == '\t') cp++;
 		if(*cp == 0x00) break;
 
 		t = get_token(cp);

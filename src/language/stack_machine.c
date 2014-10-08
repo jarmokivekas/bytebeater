@@ -21,7 +21,7 @@ void push(stack* s, int a){
 	s->top++;
 	//avoid stack overflow
 	if(s->top > MAX_STACK){
-		print(ERROR, "stack underflow");
+		print(ERROR, "stack overflow");
 		s->top = MAX_STACK;
 	}
 	s->arr[s->top] = a;
