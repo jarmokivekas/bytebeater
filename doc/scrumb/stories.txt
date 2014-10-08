@@ -8,27 +8,29 @@ VAL:	DESCRIPTION
 	* reading analog controls
 	- physical building
 
-5:	As an exploring user i want to have encoders to change variables with bit-preciscon.
-	- reading encoders
-	- physical building and wiring
-
-3:	As an exploring user i want joysticks for organic control.
-	- reading analog controls
-	- physical building, including having a solid piect to mount on
-
-4:	As a musician i want waveform pitch input in order to use the bytebeater as a module.
-	- interrupt architecture where pin changes start evaluations
-
 1:	As a composer i want to be able to change the pitch/speed of the beat.
 	- analog control reading to OCR1A
 	
+3:	As an exploring user i want joysticks for organic control.
+	- reading analog controls
+	- physical building, including having a solid piect to mount on
+	- finding and buying the components
+
 2:	As a non-programmer i want to have a possibility to choose a beat from a set of preprogrammed beats.
 	- button events
 	- executing the sample evaluation from a pointer
 
+5:	As an exploring user i want to have encoders to change variables with bit-preciscon.
+	- reading encoders
+	- physical building and wiring
+
+4:	As a musician i want waveform pitch input in order to use the bytebeater as a module.
+	- interrupt architecture where pin changes start evaluations
+
 EPIC:
 	As a musician i want MIDI pitch input in order to use the bytebeater as a module.
 	- MIDI automata and iterrupt architecture
+	- ...
 
 EPIC:
 	As a programmer i want to see the values of variables.
@@ -40,9 +42,10 @@ EPIC:
 	- text editor
 	- interpreter (fast enough)
 	- keyboard input (PS/2?)
+	- ...
 
 EPIC:
 	As a composer i want to be able to change the rythm of the beat without greatly affecting pitch.
-	- another 't' varialbe
+	- another 't' varialbe, preciscion on second place
 	- another timer interrupt
 	- analog control reading to OCRnA

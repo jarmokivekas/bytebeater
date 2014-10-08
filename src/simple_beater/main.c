@@ -18,24 +18,50 @@
 
 #include "UART_puts.h"
 #include "ADC_read.h"
-#include "TIMER_pwm.h"
+#include "TIMER_beat.h"
 #include "context.h"
+
+const uint16_t tones[13] = {
+	0x8e0b,	//A
+	0x8612,	//A#
+	0x7e8c,	//B
+	0x7772, //C
+	0x70bd,	//C#
+	0x6a69,	//D
+	0x6470,	//D#
+	0x5ecd,	//E
+	0x597b,	//F
+	0x5475,	//F#
+	0x4fb8,	//G
+	0x4b3e,	//G#
+	0x4705	//A
+};
 
 int main (void) {
 	setup_UART_puts();
-	setup_ADC();
-	setup_TIMER();
-	context ctx = {0, 10, 0, 0};
-	setup_bytebeat(&ctx);
+	//setup_ADC();
+	setup_TIMER0_PWM();
+	setup_TIMER1_CTC();
+	volatile beat_context ctx = {0, 0};
+	setup_beat(&ctx);
+	//UART_puts("Everything is set up: UART, ADC, TIMER and bytebeat context.\n\r");
 	sei();
-	UART_puts("Everything is set up: UART, ADC, TIMER and bytebeat context.\n\r");
-	uint8_t ADC_value;
+
+	uint8_t i = 0;
+	uint8_t up = 1;
+	OCR1AH = 0x08; 
+	OCR1AL = 0x00; 
 	while(1){
-		ADC_value = ADC_read(0);
-		ctx.a = ADC_value;
-		//UART_put_hex(ADC_value);
-		//UART_puts("\n\r");
-		//_delay_ms(100);
+		//set samplerate by setting sample length.
+		//Most bytebeat tones are multiples of the nyquist frequency
+		//so this will define the tone
+		OCR1AH = (tones[i]>>8)>>6 & 0xff; 
+		OCR1AL =  tones[i]>>4 >>6    & 0xff; 
+		if(up) i++;
+		else   i--;
+		if(i==12) up=0;
+		if(i==0) up=1;
+		_delay_ms(500);
 	}
 	return 0;
 }

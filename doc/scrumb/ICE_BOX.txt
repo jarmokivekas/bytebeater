@@ -13,16 +13,15 @@ Controls/Interface
 	joysticks
 	buttons
 	dials
-	sliders
+*	sliders
 
 Beat player
 *	PWM
 *	Samplerate
 	audio hardware
-	time modifies the context
+*	time modifies the context
 	context variable types
-		var
-		velocity
+*		var
 
 	
 ======== stories ========
