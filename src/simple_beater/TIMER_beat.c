@@ -30,7 +30,7 @@ volatile beat_context *ctx;
 ISR(TIMER1_COMPA_vect){
 	ctx->t++;
 	uint16_t t = ctx->t;
-	OCR0A = (t<<1)&(t>>4)?0x00:0xff;
+	OCR0A = t;//(t<<1)&(t>>4)?0x00:0xff;
 }
 
 void setup_beat(volatile beat_context *ctx_in){

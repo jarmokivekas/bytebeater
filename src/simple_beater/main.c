@@ -55,13 +55,13 @@ int main (void) {
 		//set samplerate by setting sample length.
 		//Most bytebeat tones are multiples of the nyquist frequency
 		//so this will define the tone
-		OCR1AH = (tones[i]>>8)>>4 & 0xff; 
-		OCR1AL =  tones[i]>>4     & 0xff; 
+		OCR1AH = (tones[i]>>8)>>6 & 0xff; 
+		OCR1AL =  tones[i]>>4 >>6    & 0xff; 
 		if(up) i++;
 		else   i--;
 		if(i==12) up=0;
 		if(i==0) up=1;
-		_delay_ms(1000);
+		_delay_ms(500);
 	}
 	return 0;
 }
